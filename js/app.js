@@ -7,6 +7,7 @@ import { loadAll } from './store.js';
 import { esc } from './ui.js';
 import * as dashboard from './views/dashboard.js';
 import * as eventsList from './views/events-list.js';
+import * as eventDetail from './views/event-detail.js';
 import * as competitions from './views/competitions.js';
 import * as settings from './views/settings.js';
 
@@ -14,6 +15,7 @@ import * as settings from './views/settings.js';
 const routes = [
   { pattern: /^\/$/, view: dashboard, tab: 'home' },
   { pattern: /^\/evenements$/, view: eventsList, tab: 'events' },
+  { pattern: /^\/evenements\/([\w-]+)$/, view: eventDetail, tab: 'events' },
   { pattern: /^\/competitions$/, view: competitions, tab: 'comps' },
   { pattern: /^\/reglages$/, view: settings, tab: 'settings' },
 ];

@@ -35,6 +35,10 @@ export const formatDate = (iso) => (iso ? fmtLong.format(parseISO(iso)) : '');
 // "2026-03-12" → "12 mars"
 export const formatDayMonth = (iso) => (iso ? fmtDayMonth.format(parseISO(iso)) : '');
 
+// "2026-03-12" → "mars" (abrégé, sans point final)
+const fmtMonth = new Intl.DateTimeFormat('fr-FR', { month: 'short' });
+export const formatMonthShort = (iso) => fmtMonth.format(parseISO(iso)).replace('.', '');
+
 // Date/heure complète (ex. date de dernière sauvegarde) → "2 oct. 2026"
 export const formatTimestamp = (ts) => (ts ? fmtShort.format(new Date(ts)) : '');
 

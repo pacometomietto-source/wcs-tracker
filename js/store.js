@@ -7,9 +7,10 @@
  */
 import * as db from './db.js';
 import { buildSampleData } from './sample-data.js';
-import { daysSince } from './format.js';
+import { daysSince, daysUntil, todayISO } from './format.js';
+import { RATING_CRITERIA } from './labels.js';
 
-export const APP_VERSION = '0.1.0 (étape 0)';
+export const APP_VERSION = '0.2.0 (étape 1)';
 
 export const DEFAULT_SETTINGS = {
   id: 'app',
@@ -161,6 +162,42 @@ export function availableSeasons() {
 // ---------------------------------------------------------------------------
 // Calculs
 // ---------------------------------------------------------------------------
+// Un événement est « à venir » tant que sa date de fin n'est pas passée.
+export const isUpcoming = (event) => (event.endDate || event.startDate) >= todayISO();
+
+// Urgence d'une action : 'overdue' (dépassée), 'soon' (≤ 7 jours), 'later', ou null si faite / sans date.
+export function taskUrgency(task) {
+  if (task.done || !task.dueDate) return null;
+  const n = daysUntil(task.dueDate);
+  if (n < 0) return 'overdue';
+  if (n <= 7) return 'soon';
+  return 'later';
+}
+export const URGENCY_COLOR = { overdue: 'red', soon: 'orange', later: 'gray' };
+
+export const pendingTasks = (event) => (event.tasks || []).filter((t) => !t.done);
+
+// L'urgence la plus forte parmi les actions non faites d'un événement.
+export function eventUrgency(event) {
+  const levels = pendingTasks(event).map(taskUrgency);
+  if (levels.includes('overdue')) return 'overdue';
+  if (levels.includes('soon')) return 'soon';
+  return 'later';
+}
+
+// Actions triées : non faites d'abord (par date limite), puis faites.
+export function sortTasks(tasks) {
+  const key = (t) => `${t.done ? 1 : 0}${t.dueDate || '9999-99-99'}`;
+  return [...(tasks || [])].sort((a, b) => key(a).localeCompare(key(b)));
+}
+
+// Moyenne des notes de l'évaluation (null si rien n'est noté).
+export function ratingAverage(rating) {
+  if (!rating) return null;
+  const values = Object.keys(RATING_CRITERIA).map((k) => rating[k]).filter((v) => v >= 1 && v <= 5);
+  return values.length ? values.reduce((a, b) => a + b, 0) / values.length : null;
+}
+
 // Ma part d'une dépense (négative pour un remboursement).
 export function myShare(expense) {
   const people = Math.max(1, Number(expense.people) || 1);

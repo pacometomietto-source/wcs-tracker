@@ -16,10 +16,10 @@ export function render(el) {
     ${backupBanner()}
 
     <div class="card" style="margin-top:12px">
-      <strong>Étape 0 : le squelette 🏗️</strong>
+      <strong>Étape 1 : les événements 📅</strong>
       <p class="muted small" style="margin:6px 0 0">
-        L'app est en place. Les écrans Événements, Compétitions et ce tableau de bord
-        se rempliront aux étapes suivantes.
+        L'onglet Événements est prêt : ajout, fiches, statuts, actions, évaluation et notes.
+        Les dépenses, les compétitions et ce tableau de bord arrivent aux étapes suivantes.
       </p>
     </div>
 
