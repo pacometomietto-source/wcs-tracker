@@ -10,7 +10,7 @@ import { buildSampleData } from './sample-data.js';
 import { daysSince, daysUntil, todayISO } from './format.js';
 import { RATING_CRITERIA } from './labels.js';
 
-export const APP_VERSION = '0.2.0 (étape 1)';
+export const APP_VERSION = '0.3.0 (étape 2)';
 
 export const DEFAULT_SETTINGS = {
   id: 'app',

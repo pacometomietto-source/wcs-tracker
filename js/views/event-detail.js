@@ -13,6 +13,7 @@ import {
   formatDateRange, formatDayMonth, formatEuro, daysUntil, formatRelativeDays,
 } from '../format.js';
 import { openEventForm, openTaskForm } from './event-form.js';
+import { openExpenseForm, expenseRow, bindExpenseRows } from './expense-form.js';
 
 export function render(el, id) {
   const event = getEvent(id);
@@ -27,7 +28,9 @@ export function render(el, id) {
   const place = [event.city, event.country].filter(Boolean).join(', ');
   const tasks = sortTasks(event.tasks);
   const pending = pendingTasks(event).length;
-  const expenses = state.expenses.filter((x) => x.eventId === id);
+  const expenses = state.expenses
+    .filter((x) => x.eventId === id)
+    .sort((a, b) => a.date.localeCompare(b.date));
   const comps = state.competitions.filter((c) => c.eventId === id);
   const rating = event.rating || {};
   const average = ratingAverage(event.rating);
@@ -82,14 +85,11 @@ export function render(el, id) {
       <button type="button" class="row action" data-add-task>＋ Ajouter une action</button>
     </div>
 
-    <div class="section-title">Dépenses</div>
+    <div class="section-title">Dépenses · ma part ${formatEuro(expenses.reduce((sum, x) => sum + myShare(x), 0))}</div>
     <div class="list">
-      <div class="row">
-        <div class="row-main">${expenses.length} dépense(s) · ma part</div>
-        <div class="row-value">${formatEuro(expenses.reduce((sum, x) => sum + myShare(x), 0))}</div>
-      </div>
+      ${expenses.map((x) => expenseRow(x)).join('')}
+      <button type="button" class="row action" data-add-expense>＋ Ajouter une dépense</button>
     </div>
-    <div class="section-footer">Le détail et la saisie des dépenses arrivent à l'étape 2.</div>
 
     <div class="section-title">Compétitions</div>
     <div class="list">
@@ -192,6 +192,10 @@ function bind(el, id) {
       await update({ tasks });
     });
   });
+
+  // Dépenses
+  el.querySelector('[data-add-expense]').addEventListener('click', () => openExpenseForm({ eventId: id }));
+  bindExpenseRows(el);
 
   // Évaluation : toucher l'étoile déjà choisie efface la note
   el.querySelectorAll('[data-criterion]').forEach((group) => {

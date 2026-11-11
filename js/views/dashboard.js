@@ -16,10 +16,10 @@ export function render(el) {
     ${backupBanner()}
 
     <div class="card" style="margin-top:12px">
-      <strong>Étape 1 : les événements 📅</strong>
+      <strong>Étape 2 : les dépenses 💶</strong>
       <p class="muted small" style="margin:6px 0 0">
-        L'onglet Événements est prêt : ajout, fiches, statuts, actions, évaluation et notes.
-        Les dépenses, les compétitions et ce tableau de bord arrivent aux étapes suivantes.
+        Les événements et les dépenses sont prêts (fiche événement, et vue « Dépenses »
+        dans l'onglet Événements). Les compétitions et ce tableau de bord arrivent aux étapes suivantes.
       </p>
     </div>
 

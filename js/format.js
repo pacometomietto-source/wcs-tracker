@@ -39,6 +39,21 @@ export const formatDayMonth = (iso) => (iso ? fmtDayMonth.format(parseISO(iso)) 
 const fmtMonth = new Intl.DateTimeFormat('fr-FR', { month: 'short' });
 export const formatMonthShort = (iso) => fmtMonth.format(parseISO(iso)).replace('.', '');
 
+// "2026-11-12" → "novembre 2026" (formatMonthYear) ou "nov. 2026" (formatMonthYearShort)
+const fmtMonthYearLong = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' });
+const fmtMonthYearShort = new Intl.DateTimeFormat('fr-FR', { month: 'short', year: 'numeric' });
+export const formatMonthYear = (iso) => fmtMonthYearLong.format(parseISO(iso));
+export const formatMonthYearShort = (iso) => fmtMonthYearShort.format(parseISO(iso));
+
+// Texte saisi → nombre. Accepte la virgule : "12,50" → 12.5 ; "" → NaN
+export function parseAmount(text) {
+  const cleaned = String(text ?? '').replace(/[\s€]/g, '').replace(',', '.');
+  return cleaned === '' ? NaN : Number(cleaned);
+}
+
+// Nombre → texte pour un champ de saisie : 12.5 → "12,5"
+export const amountToInput = (n) => (n === '' || n == null ? '' : String(n).replace('.', ','));
+
 // Date/heure complète (ex. date de dernière sauvegarde) → "2 oct. 2026"
 export const formatTimestamp = (ts) => (ts ? fmtShort.format(new Date(ts)) : '');
 

@@ -29,6 +29,7 @@ const APP_FILES = [
   './js/views/events-list.js',
   './js/views/event-detail.js',
   './js/views/event-form.js',
+  './js/views/expense-form.js',
   './js/views/competitions.js',
   './js/views/settings.js',
   './icons/icon-180.png',

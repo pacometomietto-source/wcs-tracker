@@ -41,6 +41,15 @@ export const CATEGORIES = {
   privateLesson: 'Cours particuliers',
 };
 
+export const CATEGORY_ICONS = {
+  pass: '🎟️', lodging: '🏨', transport: '🚆', competition: '🏆', privateLesson: '🎓',
+};
+export const AREA_ICONS = {
+  registration: '🎟️', lodging: '🏨', transport: '🚆', competitions: '🏆',
+};
+
+export const EXPENSE_KINDS = { expense: 'Dépense', refund: 'Remboursement' };
+
 export const COMP_TYPES = { jj: 'Jack & Jill', strictly: 'Strictly' };
 export const ROLES = { leader: 'Leader', follower: 'Follower' };
 export const ROUNDS = { prelims: 'Prélims', quarters: 'Quarts', semis: 'Demi', final: 'Finale' };

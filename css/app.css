@@ -68,7 +68,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .view {
   max-width: 640px;
   margin: 0 auto;
-  padding: calc(var(--safe-top) + 8px) 16px calc(var(--tabbar-h) + var(--safe-bottom) + 32px);
+  /* bas : place pour la barre d'onglets + le bouton rond « ＋ » */
+  padding: calc(var(--safe-top) + 8px) 16px calc(var(--tabbar-h) + var(--safe-bottom) + 96px);
 }
 
 /* ---------- En-tête de page (grand titre façon iOS) ---------- */
@@ -574,6 +575,49 @@ button.plain {
   padding: 16px 16px calc(24px + var(--safe-bottom));
 }
 body.no-scroll { overflow: hidden; }
+
+/* ==========================================================================
+   Étape 2 — dépenses
+   ========================================================================== */
+.cat-icon { font-size: 22px; width: 30px; text-align: center; flex-shrink: 0; }
+.amount-col { text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.amount-col .row-sub { font-size: 12px; }
+.big-amount { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 2px 0; }
+
+/* Choix Dépense / Remboursement (boutons radio déguisés en contrôle segmenté) */
+.segmented.radio label { display: block; position: relative; }
+.segmented.radio input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented.radio span {
+  display: block;
+  text-align: center;
+  padding: 7px 8px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.segmented.radio input:checked + span {
+  background: var(--seg-on);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+}
+
+/* Champ montant */
+.row input.amount { width: 120px; color: var(--text); font-weight: 600; }
+
+/* Boutons − / + */
+.stepper { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.stepper button {
+  width: 36px; height: 32px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--fill);
+  color: var(--accent);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.row .stepper input[type="number"] { width: 40px; text-align: center; color: var(--text); }
 
 .hidden { display: none !important; }
 .muted { color: var(--text-2); }
