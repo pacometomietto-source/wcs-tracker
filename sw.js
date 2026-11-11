@@ -24,6 +24,7 @@ const APP_FILES = [
   './js/format.js',
   './js/labels.js',
   './js/ui.js',
+  './js/charts.js',
   './js/sample-data.js',
   './js/views/dashboard.js',
   './js/views/events-list.js',

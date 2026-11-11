@@ -10,7 +10,7 @@ import { buildSampleData } from './sample-data.js';
 import { daysSince, daysUntil, todayISO } from './format.js';
 import { RATING_CRITERIA } from './labels.js';
 
-export const APP_VERSION = '0.4.0 (étape 3)';
+export const APP_VERSION = '1.0.0';
 
 export const DEFAULT_SETTINGS = {
   id: 'app',
@@ -203,6 +203,17 @@ const uniqueSorted = (names) => {
 export const knownPartners = () => uniqueSorted(state.competitions.map((c) => c.partner));
 export const knownJudges = () => uniqueSorted(state.competitions.flatMap((c) =>
   Object.values(c.rounds || {}).flat().map((r) => r.judge)));
+
+// --- Points WSDC (seuls les Jack & Jill comptent pour changer de division) ---
+const jjIn = (division, comps) => comps.filter((c) => c.type === 'jj' && c.division === division);
+const sumPoints = (comps) => comps.reduce((s, c) => s + (Number(c.points) || 0), 0);
+
+// Total cumulé dans une division : points de départ + toutes les compétitions
+export const totalPoints = (division) =>
+  (Number(state.settings.startingPoints[division]) || 0) + sumPoints(jjIn(division, state.competitions));
+
+// Points gagnés dans une division pendant la saison affichée
+export const seasonPoints = (division) => sumPoints(jjIn(division, competitionsInSeason()));
 
 // Moyenne des notes de l'évaluation (null si rien n'est noté).
 export function ratingAverage(rating) {

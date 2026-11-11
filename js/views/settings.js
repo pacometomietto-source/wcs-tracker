@@ -98,6 +98,7 @@ export function render(el) {
     <div class="list">
       <div class="row"><div class="row-main">Version</div><div class="row-value">${APP_VERSION}</div></div>
       <div class="row"><div class="row-main">Ouverte depuis</div><div class="row-value">${isInstalled() ? "l'écran d'accueil" : 'le navigateur'}</div></div>
+      <div class="row"><div class="row-main">Prête pour le hors ligne</div><div class="row-value">${'serviceWorker' in navigator && navigator.serviceWorker.controller ? 'Oui ✅' : 'Pas encore'}</div></div>
       <div class="row"><div class="row-main">Stockage protégé</div><div class="row-value" data-persisted>…</div></div>
     </div>
     <div class="section-footer">Tes données sont enregistrées uniquement sur cet appareil.</div>

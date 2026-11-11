@@ -54,6 +54,12 @@ export function parseAmount(text) {
 // Nombre → texte pour un champ de saisie : 12.5 → "12,5"
 export const amountToInput = (n) => (n === '' || n == null ? '' : String(n).replace('.', ','));
 
+// Montant court pour les axes des graphiques : 250 → "250 €", 1500 → "1,5 k€"
+export function formatEuroShort(n) {
+  if (Math.abs(n) >= 1000) return `${(n / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} k€`;
+  return `${Math.round(n)} €`;
+}
+
 // 1 → "1ᵉʳ", 2 → "2ᵉ"
 export const ordinal = (n) => (Number(n) === 1 ? '1ᵉʳ' : `${n}ᵉ`);
 

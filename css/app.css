@@ -679,6 +679,105 @@ body.no-scroll { overflow: hidden; }
 .mark-chip.m-no { background: var(--gray); }
 .mark-chip.m-place { background: var(--fill); color: var(--text); }
 
+/* ==========================================================================
+   Étape 4 — tableau de bord et graphiques
+   Palette des graphiques vérifiée (lisibilité + daltonisme) en clair et en sombre.
+   ========================================================================== */
+:root {
+  --series-1: #2a78d6;  /* bleu    : Pass, courbe des points */
+  --series-2: #eb6834;  /* orange  : Logement */
+  --series-3: #1baf7a;  /* vert d'eau : Transport */
+  --series-4: #eda100;  /* jaune   : Compétition */
+  --series-5: #e87ba4;  /* rose    : Cours particuliers */
+  --on-series-4: #0b0b0b; /* texte écrit dans le bloc jaune */
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --axis-ink: #898781;
+  --track: #cde2fb;     /* fond de la barre de progression */
+  --good: #0ca30c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --on-series-4: #ffffff;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --track: #184f95;
+  }
+}
+
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart .grid { stroke: var(--grid); stroke-width: 1; }
+.chart .baseline { stroke: var(--axis); stroke-width: 1; }
+.chart .axis-label { fill: var(--axis-ink); font-size: 11px; }
+.chart .value-label { fill: var(--text); font-size: 12px; font-weight: 600; }
+.chart .line { fill: none; stroke: var(--series-1); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart .area { fill: var(--series-1); opacity: 0.1; }
+.chart .dot { fill: var(--series-1); stroke: var(--card); stroke-width: 2; }
+.chart .col { fill: var(--series-1); }
+.chart .hit { fill: transparent; cursor: pointer; }
+.chart g.is-active .dot { r: 6.5; }
+.chart.has-active g[data-tip]:not(.is-active) .col { opacity: 0.45; }
+.chart-tip {
+  margin-top: 8px;
+  min-height: 20px;
+  font-size: 14px;
+  color: var(--text-2);
+  text-align: center;
+}
+.chart-tip.on { color: var(--text); font-weight: 600; }
+
+/* Barre segmentée (répartition par catégorie) */
+.seg-bar { display: flex; gap: 2px; height: 28px; }
+.seg {
+  flex-basis: 0;
+  min-width: 3px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: visible;
+  white-space: nowrap;
+}
+.seg.is-active { outline: 2px solid var(--text); outline-offset: 1px; }
+.swatch { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+/* Barres horizontales (total par événement) */
+.bar-row { display: block; padding: 10px 16px; color: var(--text); position: relative; }
+.bar-row + .bar-row::before {
+  content: ""; position: absolute; top: 0; left: 16px; right: 0;
+  border-top: 0.5px solid var(--separator);
+}
+.bar-head { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; }
+.bar-head span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-head span:last-child { flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.bar-track { margin-top: 6px; height: 8px; }
+.bar-fill { height: 8px; border-radius: 4px; background: var(--series-1); min-width: 4px; }
+
+/* Barre de progression vers le seuil de division */
+.meter { position: relative; height: 12px; border-radius: 6px; background: var(--track); margin-top: 14px; }
+.meter-fill { height: 100%; border-radius: 6px; background: var(--series-1); }
+.meter-fill.ok { background: var(--good); }
+.meter-mark {
+  position: absolute; top: -4px; bottom: -4px; width: 2px;
+  background: var(--text); border-radius: 1px; transform: translateX(-1px);
+}
+.meter-scale { position: relative; height: 18px; margin-top: 6px; font-size: 12px; color: var(--text-2); }
+.meter-scale span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.meter-scale span:first-child { transform: none; }
+.meter-scale span:last-child { transform: translateX(-100%); }
+.meter-text { margin: 10px 0 0; font-size: 15px; }
+
+.card-title { font-weight: 600; margin-bottom: 10px; }
+.card-title .muted { font-weight: 400; }
+
 .hidden { display: none !important; }
 .muted { color: var(--text-2); }
 .small { font-size: 14px; }
