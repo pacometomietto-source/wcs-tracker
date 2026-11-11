@@ -133,6 +133,17 @@ export function openSheet({ title, body, saveLabel = 'OK', onSave, onDelete, del
   return { form, close };
 }
 
+// Bouton « ‹ Retour » : revient à l'écran précédent, ou à `fallback` s'il n'y en a pas.
+export function goBack(fallback) {
+  if (window.history.length > 1) window.history.back();
+  else window.location.hash = fallback;
+}
+
+// Liste de suggestions pour un champ texte (<input list="id">)
+export function datalist(id, values) {
+  return `<datalist id="${id}">${values.map((v) => `<option value="${esc(v)}"></option>`).join('')}</datalist>`;
+}
+
 // L'app est-elle ouverte depuis l'écran d'accueil (et non dans Safari) ?
 export function isInstalled() {
   return window.navigator.standalone === true

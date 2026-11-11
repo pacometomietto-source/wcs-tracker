@@ -14,6 +14,7 @@ import {
 } from '../format.js';
 import { openEventForm, openTaskForm } from './event-form.js';
 import { openExpenseForm, expenseRow, bindExpenseRows } from './expense-form.js';
+import { openCompetitionForm, compRow } from './competition-form.js';
 
 export function render(el, id) {
   const event = getEvent(id);
@@ -91,14 +92,11 @@ export function render(el, id) {
       <button type="button" class="row action" data-add-expense>＋ Ajouter une dépense</button>
     </div>
 
-    <div class="section-title">Compétitions</div>
+    <div class="section-title">Compétitions${comps.length ? ` · ${comps.reduce((sum, c) => sum + (Number(c.points) || 0), 0)} pts` : ''}</div>
     <div class="list">
-      <div class="row">
-        <div class="row-main">${comps.length} compétition(s)</div>
-        <div class="row-value">${comps.reduce((sum, c) => sum + (Number(c.points) || 0), 0)} pts</div>
-      </div>
+      ${comps.map((c) => compRow(c)).join('')}
+      <button type="button" class="row action" data-add-comp>＋ Ajouter une compétition</button>
     </div>
-    <div class="section-footer">Le détail et la saisie des résultats arrivent à l'étape 3.</div>
 
     <div class="section-title">Évaluation</div>
     <div class="list">
@@ -196,6 +194,9 @@ function bind(el, id) {
   // Dépenses
   el.querySelector('[data-add-expense]').addEventListener('click', () => openExpenseForm({ eventId: id }));
   bindExpenseRows(el);
+
+  // Compétitions
+  el.querySelector('[data-add-comp]').addEventListener('click', () => openCompetitionForm({ eventId: id }));
 
   // Évaluation : toucher l'étoile déjà choisie efface la note
   el.querySelectorAll('[data-criterion]').forEach((group) => {

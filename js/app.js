@@ -9,6 +9,7 @@ import * as dashboard from './views/dashboard.js';
 import * as eventsList from './views/events-list.js';
 import * as eventDetail from './views/event-detail.js';
 import * as competitions from './views/competitions.js';
+import * as competitionDetail from './views/competition-detail.js';
 import * as settings from './views/settings.js';
 
 // Table des écrans : adresse → fichier de l'écran + onglet à surligner
@@ -17,6 +18,7 @@ const routes = [
   { pattern: /^\/evenements$/, view: eventsList, tab: 'events' },
   { pattern: /^\/evenements\/([\w-]+)$/, view: eventDetail, tab: 'events' },
   { pattern: /^\/competitions$/, view: competitions, tab: 'comps' },
+  { pattern: /^\/competitions\/([\w-]+)$/, view: competitionDetail, tab: 'comps' },
   { pattern: /^\/reglages$/, view: settings, tab: 'settings' },
 ];
 

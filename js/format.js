@@ -54,6 +54,16 @@ export function parseAmount(text) {
 // Nombre → texte pour un champ de saisie : 12.5 → "12,5"
 export const amountToInput = (n) => (n === '' || n == null ? '' : String(n).replace('.', ','));
 
+// 1 → "1ᵉʳ", 2 → "2ᵉ"
+export const ordinal = (n) => (Number(n) === 1 ? '1ᵉʳ' : `${n}ᵉ`);
+
+// Ajoute "https://" si une adresse web saisie n'en a pas.
+export function normalizeUrl(value) {
+  const url = (value || '').trim();
+  if (!url) return '';
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
 // Date/heure complète (ex. date de dernière sauvegarde) → "2 oct. 2026"
 export const formatTimestamp = (ts) => (ts ? fmtShort.format(new Date(ts)) : '');
 

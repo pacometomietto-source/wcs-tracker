@@ -10,7 +10,7 @@ import { buildSampleData } from './sample-data.js';
 import { daysSince, daysUntil, todayISO } from './format.js';
 import { RATING_CRITERIA } from './labels.js';
 
-export const APP_VERSION = '0.3.0 (étape 2)';
+export const APP_VERSION = '0.4.0 (étape 3)';
 
 export const DEFAULT_SETTINGS = {
   id: 'app',
@@ -190,6 +190,19 @@ export function sortTasks(tasks) {
   const key = (t) => `${t.done ? 1 : 0}${t.dueDate || '9999-99-99'}`;
   return [...(tasks || [])].sort((a, b) => key(a).localeCompare(key(b)));
 }
+
+// Compétitions d'un événement
+export const competitionsOfEvent = (eventId) => state.competitions.filter((c) => c.eventId === eventId);
+
+// Noms déjà saisis, pour l'autocomplétion (triés par ordre alphabétique)
+const uniqueSorted = (names) => {
+  const byKey = new Map();
+  names.filter(Boolean).forEach((n) => { if (!byKey.has(n.toLowerCase())) byKey.set(n.toLowerCase(), n); });
+  return [...byKey.values()].sort((a, b) => a.localeCompare(b, 'fr'));
+};
+export const knownPartners = () => uniqueSorted(state.competitions.map((c) => c.partner));
+export const knownJudges = () => uniqueSorted(state.competitions.flatMap((c) =>
+  Object.values(c.rounds || {}).flat().map((r) => r.judge)));
 
 // Moyenne des notes de l'évaluation (null si rien n'est noté).
 export function ratingAverage(rating) {

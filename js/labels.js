@@ -54,6 +54,8 @@ export const COMP_TYPES = { jj: 'Jack & Jill', strictly: 'Strictly' };
 export const ROLES = { leader: 'Leader', follower: 'Follower' };
 export const ROUNDS = { prelims: 'Prélims', quarters: 'Quarts', semis: 'Demi', final: 'Finale' };
 export const MARKS = { yes: 'Yes', alt1: 'Alt 1', alt2: 'Alt 2', alt3: 'Alt 3', no: 'No' };
+export const MARKS_SHORT = { yes: 'Y', alt1: 'A1', alt2: 'A2', alt3: 'A3', no: 'N' };
+export const COMP_ICONS = { jj: '🎲', strictly: '👯' };
 
 export const RATING_CRITERIA = {
   music: 'DJ / musique',
